@@ -6,7 +6,7 @@
   <%= form_tag movies_path, :method => 'get', :id => 'ratings_form' do %>
     <span style='font-weight: bold'>Ratings : </span>&nbsp;&nbsp;
     <% @allRatings.each do |rating| %>
-      <input type="checkbox" id="<%= "ratings_#{rating}" %>" name="<%= "ratings_filter[#{rating}]" %>" value=1>
+      <input type="checkbox" id="<%= "ratings_#{rating}" %>" name="<%= "ratings_filter[#{rating}]" %>" value=1 <%= @filterRatings.include?(rating) ? 'checked' : '' %> >
       <span><%= "#{rating}" %></span>&nbsp;&nbsp;
     <% end %>
     <%= submit_tag 'Refresh', :class => 'btn btn-primary', :id => 'ratings_submit' %>

@@ -8,6 +8,7 @@ class MoviesController < ApplicationController
   
     def index
       @sortedBy = nil
+      @filterRatings = nil
       @query = Movie
       @movies = @query.all
       @allRatings = Movie.uniq.pluck('rating')
@@ -16,9 +17,11 @@ class MoviesController < ApplicationController
         @movies = @query.all.order("#{@sortedBy}")
       end
       if params.has_key?('ratings_filter')
+        puts "filter tags #{@filterRatings} #{params[:ratings_filter]}"
         @filterRatings = params[:ratings_filter].keys
         @movies = @query.where(rating: @filterRatings).all
       else
+        puts "filter tags refresh #{@filterRatings}"
         @filterRatings = @allRatings
       end
     end

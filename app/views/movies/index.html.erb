@@ -2,9 +2,15 @@
 <h2>All Movies</h2>
 
 <%#  Part 2: Start here... %>
-<% @allRatings.each do |rating| %>
-  <input type="checkbox" id="vehicle1" name="" value=1>
-  <p>"#{rating}"</p>
+<% if !@allRatings.empty? %>
+  <%= form_tag movies_path, :method => 'get', :id => 'ratings_form' do %>
+    <span style='font-weight: bold'>Ratings : </span>&nbsp;&nbsp;
+    <% @allRatings.each do |rating| %>
+      <input type="checkbox" id="<%= "ratings_#{rating}" %>" name="<%= "ratings_filter[#{rating}]" %>" value=1>
+      <span><%= "#{rating}" %></span>&nbsp;&nbsp;
+    <% end %>
+    <%= submit_tag 'Refresh', :class => 'btn btn-primary', :id => 'ratings_submit' %>
+  <% end %>
 <% end %>
 <table class="table table-striped col-md-12" id="movies">
   <thead>

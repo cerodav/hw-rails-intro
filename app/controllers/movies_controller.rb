@@ -11,12 +11,16 @@ class MoviesController < ApplicationController
       @query = Movie
       @movies = @query.all
       @allRatings = Movie.uniq.pluck('rating')
-      puts "all ratings are #{@allRatings}"
       if params.has_key?('sort_by') and Movie.column_names.include?(params[:sort_by])
         @sortedBy = params[:sort_by]
         @movies = @query.all.order("#{@sortedBy}")
       end
-      
+      if params.has_key?('ratings_filter')
+        @filterRatings = params[:ratings_filter].keys
+        @movies = @query.where(rating: @filterRatings).all
+      else
+        @filterRatings = @allRatings
+      end
     end
   
     def new

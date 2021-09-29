@@ -7,7 +7,16 @@ class MoviesController < ApplicationController
     end
   
     def index
-      @movies = Movie.all
+      @sortedBy = nil
+      @query = Movie
+      @movies = @query.all
+      @allRatings = Movie.uniq.pluck('rating')
+      puts "all ratings are #{@allRatings}"
+      if params.has_key?('sort_by') and Movie.column_names.include?(params[:sort_by])
+        @sortedBy = params[:sort_by]
+        @movies = @query.all.order("#{@sortedBy}")
+      end
+      
     end
   
     def new
